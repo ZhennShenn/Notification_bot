@@ -122,7 +122,7 @@ class Loader:
         report_text = 'Заказы по которым обнаружены расхождения:\n'
         notification_list = self.formation_notification_list()
         for order in notification_list:
-            report_text += f"\n{order['order_code']}\n"
+            report_text += f"\n{order['order_code']}  - {order['account']}\n"
 
         return report_text
 

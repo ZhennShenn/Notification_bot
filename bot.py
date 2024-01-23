@@ -66,9 +66,10 @@ async def send_result():
     # Получение списка активных чатов
     active_users = get_users()
     # Отправка сообщения с результатом во все активные чаты
+    loader_order = Loader(params=my_params)
+    report_text = loader_order.formation_text_message()
+
     for user_id in active_users:
-        loader_order = Loader(params=my_params)
-        report_text = loader_order.formation_text_message()
         await bot.send_message(chat_id=user_id[0], text=report_text)
 
 
