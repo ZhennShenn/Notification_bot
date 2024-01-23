@@ -26,10 +26,25 @@ async def start(message: types.Message):
     """
     # Проверяем, авторизован ли пользователь
     if is_authorized(message.from_user.id):
-        await message.reply('Вы авторизованы.')
+        await message.reply('Вы успешно авторизовались. '
+                            'Для справки вызовите команду /help.')
     else:
         # Запрашиваем секретное слово у пользователя
         await message.reply('Введите секретное слово:')
+
+
+# Обработчик команды "/help"
+@dp.message(Command("help"))
+async def process_help_command(message: types.Message):
+    """
+        This handler receives messages with `/help` command
+    """
+    help_message = "Бот ежедневно в 10:00 и 18:00 отправляет список заказов, которые были отгружены, " \
+                    "но не были отсканированы в течение 12 часов.\n\n" \
+                    "Список доступных команд:\n\n" \
+                    "/start - Начать взаимодействие с ботом.\n\n" \
+                    "/info - Получить номера заказов с расхождениями за последние 12 часов.\n\n"
+    await message.reply(help_message)
 
 
 # Обработчик команды /info
@@ -55,11 +70,13 @@ async def process_secret_word(message: types.Message):
     if message.text == SECRET:
         # Добавляем идентификатор пользователя в базу данных
         add_user_to_database(message.from_user.id)
-        await message.reply('Доступ разрешен. Вы можете продолжить использование бота.')
+        await message.reply('Вы успешно авторизовались. '
+                            'Для справки вызовите команду /help.')
     elif is_authorized(message.from_user.id):
-        await message.reply('Вы уже авторизовались.')
+        await message.reply('Вы успешно авторизовались. '
+                            'Для справки вызовите команду /help.')
     else:
-        await message.reply('Доступ запрещен.')
+        await message.reply('Введите секретное слово:')
 
 
 async def send_result():

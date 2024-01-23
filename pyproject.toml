@@ -10,7 +10,6 @@ python = "^3.10"
 aiogram = "^3.3.0"
 schedule = "^1.2.1"
 apscheduler = "^3.10.4"
-fs-moysklad-api = {git = "https://github.com/fogstream/fs-moysklad-api"}
 
 
 [build-system]
