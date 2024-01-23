@@ -41,8 +41,8 @@ async def start(message: types.Message):
     # Проверяем, авторизован ли пользователь
     if is_authorized(message.from_user.id):
         loader_order = Loader(params=my_params)
-        list_notification = loader_order.formation_notification_list()
-        await message.reply(str(list_notification))
+        report_text = loader_order.formation_text_message()
+        await message.reply(report_text)
     else:
         # Запрашиваем секретное слово у пользователя
         await message.reply('Введите секретное слово:')
@@ -68,8 +68,8 @@ async def send_result():
     # Отправка сообщения с результатом во все активные чаты
     for user_id in active_users:
         loader_order = Loader(params=my_params)
-        list_notification = loader_order.formation_notification_list()
-        await bot.send_message(chat_id=user_id[0], text=str(list_notification))
+        report_text = loader_order.formation_text_message()
+        await bot.send_message(chat_id=user_id[0], text=report_text)
 
 
 # Запуск бота

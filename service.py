@@ -118,15 +118,24 @@ class Loader:
                     notification_list.append(order)
         return notification_list
 
+    def formation_text_message(self):
+        report_text = 'Заказы по которым обнаружены расхождения:\n'
+        notification_list = self.formation_notification_list()
+        for order in notification_list:
+            report_text += f"\n{order['order_code']}\n"
 
-start_time = time.time()
+        return report_text
 
-loader_order = Loader(params=my_params)
-list_notification = loader_order.formation_notification_list()
 
-pprint(list_notification, indent=4)
-print(len(list_notification))
 
-end_time = time.time()
-duration = end_time - start_time
-print(f'Duration: {duration} seconds')
+# start_time = time.time()
+#
+# loader_order = Loader(params=my_params)
+# list_notification = loader_order.formation_notification_list()
+#
+# pprint(list_notification, indent=4)
+# print(len(list_notification))
+#
+# end_time = time.time()
+# duration = end_time - start_time
+# print(f'Duration: {duration} seconds')
