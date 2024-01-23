@@ -5,8 +5,8 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 import logging
 
-from config import TG_TOKEN, SECRET
-from service import calculate
+from config import TG_TOKEN, SECRET, my_params
+from service import  Loader
 from utils import is_authorized, add_user_to_database, get_users
 
 # Включаем логирование, чтобы не пропустить важные сообщения
@@ -40,7 +40,9 @@ async def start(message: types.Message):
     """
     # Проверяем, авторизован ли пользователь
     if is_authorized(message.from_user.id):
-        await message.reply(str(calculate()))
+        loader_order = Loader(params=my_params)
+        list_notification = loader_order.formation_notification_list()
+        await message.reply(str(list_notification))
     else:
         # Запрашиваем секретное слово у пользователя
         await message.reply('Введите секретное слово:')
@@ -65,7 +67,9 @@ async def send_result():
     active_users = get_users()
     # Отправка сообщения с результатом во все активные чаты
     for user_id in active_users:
-        await bot.send_message(chat_id=user_id[0], text=str(calculate()))
+        loader_order = Loader(params=my_params)
+        list_notification = loader_order.formation_notification_list()
+        await bot.send_message(chat_id=user_id[0], text=str(list_notification))
 
 
 # Запуск бота
