@@ -85,7 +85,7 @@ class Loader:
 
         part_dataset = []
         for order in response_rows:
-            if order['state']['name'] not in ['Ожидает сборки', 'Отменен', 'Новый']:
+            if order['state']['name'] not in ['Ожидает сборки', 'Отменен', 'Новый', 'Подтвержден']:
                 processed_order = self.process_order(order)
                 part_dataset.append(processed_order)
         return part_dataset
