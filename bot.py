@@ -92,7 +92,7 @@ async def send_result():
 
 # Запуск бота
 async def main():
-    scheduler.add_job(send_result, 'cron', hour=10)
+    scheduler.add_job(send_result, 'cron', hour=13)
     scheduler.add_job(send_result, 'cron', hour=18)
     scheduler.start()
     await dp.start_polling(bot)

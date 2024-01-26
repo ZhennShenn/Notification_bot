@@ -131,8 +131,10 @@ class Loader:
         return notification_list
 
     def formation_text_message(self):
-        report_text = 'Заказы по которым обнаружены расхождения:\n'
         notification_list = self.formation_notification_list()
+        report_text = 'Заказы по которым обнаружены расхождения:\n'
+        if len(notification_list) == 0:
+            report_text = 'Расхождений в заказах не найдено.\n'
         for order in notification_list:
             report_text += f"\n{order['order_code']}  - {order['account']}\n"
 
