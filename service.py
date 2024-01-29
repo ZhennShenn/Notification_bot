@@ -50,8 +50,6 @@ class Loader:
 
         try:
             start_date, finish_date = self.get_formatted_dates()
-            print(start_date)
-            print(finish_date)
             response = self.client.get(
                 method=self.methods.get_list_url(self.entity),
                 query=Query(
@@ -60,7 +58,6 @@ class Loader:
                     Expand(*self.expand)
                 )
             )
-
             return response
 
         except ApiResponseException as ex:
@@ -99,9 +96,7 @@ class Loader:
             'attributes': order.get('attributes',
                                     [{'value': None, 'id': 'bb89136d-7a4f-11ed-0a80-03dc00017d69'}]),
             'sum': order['sum'] / 100,
-            'scanned': None,
-            'updated': order.get('updated'),
-            'delivery': 0
+            'scanned': None
         }
 
         for attribute in order_data['attributes']:
@@ -131,8 +126,10 @@ class Loader:
         return notification_list
 
     def formation_text_message(self):
-        report_text = 'Заказы по которым обнаружены расхождения:\n'
         notification_list = self.formation_notification_list()
+        report_text = 'Заказы по которым обнаружены расхождения:\n'
+        if len(notification_list) == 0:
+            report_text = 'Расхождений в заказах не найдено.\n'
         for order in notification_list:
             report_text += f"\n{order['order_code']}  - {order['account']}\n"
 
@@ -140,14 +137,14 @@ class Loader:
 
 
 
-start_time = time.time()
-
-loader_order = Loader(params=my_params)
-list_notification = loader_order.formation_notification_list()
-
-pprint(list_notification, indent=4)
+# start_time = time.time()
+#
+# loader_order = Loader(params=my_params)
+# list_notification = loader_order.formation_notification_list()
+#
+# pprint(list_notification, indent=4)
 # print(len(list_notification))
-
-end_time = time.time()
-duration = end_time - start_time
-print(f'Duration: {duration} seconds')
+#
+# end_time = time.time()
+# duration = end_time - start_time
+# print(f'Duration: {duration} seconds')
