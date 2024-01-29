@@ -120,7 +120,7 @@ class Loader:
             self.init_ms(account)
             full_dataset = self.formation_full_dataset()
             for order in full_dataset:
-                if order['scanned'] is None or order['scanned'] != order['sum']:
+                if order['scanned'] is None or abs(order['scanned'] - order['sum']) > 5:
                     order['account'] = account['name']
                     notification_list.append(order)
         return notification_list
